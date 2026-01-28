@@ -13,7 +13,6 @@
         .font-classic-romantic { font-family: 'Great Vibes', cursive; }
         .hidden { display: none !important; }
         
-        /* Floating Heart Animation */
         .floating-heart {
             position: fixed; bottom: -50px; pointer-events: none; z-index: 0;
             animation: float linear infinite;
@@ -27,18 +26,18 @@
         /* Form Styling */
         .form-group { position: relative; margin-bottom: 1.5rem; }
         .form-control {
-            width: 100%; padding: 0.75rem; background: transparent;
-            border: 2px solid #fda4af; border-radius: 0.75rem; outline: none;
-            transition: border-color 0.3s;
+            width: 100%; padding: 1rem; background: white;
+            border: 2px solid #fda4af; border-radius: 1rem; outline: none;
+            transition: all 0.3s;
         }
-        .form-control:focus { border-color: #9f1239; }
+        .form-control:focus { border-color: #9f1239; box-shadow: 0 0 10px rgba(159, 18, 57, 0.1); }
         .form-group label {
-            position: absolute; left: 1rem; top: 0.75rem; color: #9f1239;
+            position: absolute; left: 1rem; top: 1rem; color: #9f1239;
             transition: all 0.3s; pointer-events: none; opacity: 0.6;
         }
         .form-control:focus + label, .form-control:not(:placeholder-shown) + label {
-            top: -0.6rem; left: 0.8rem; font-size: 0.75rem; 
-            background: white; padding: 0 0.4rem; opacity: 1; font-weight: bold;
+            top: -0.6rem; left: 0.8rem; font-size: 0.8rem; 
+            background: white; padding: 0 0.5rem; opacity: 1; font-weight: bold;
         }
     </style>
 </head>
@@ -85,23 +84,24 @@
         </div>
 
         <div id="step-success" class="hidden w-full max-w-md bg-white/95 p-8 rounded-[2rem] shadow-2xl border-2 border-rose-200">
-            <div class="text-center mb-6">
+            <div class="text-center mb-8">
                 <h2 class="text-3xl font-romantic text-rose-950 font-black">I'm so incredibly lucky!</h2>
-                <p class="text-rose-800 font-medium">Send me a message to seal the deal!</p>
+                <p class="text-rose-800 font-medium">Leave a message for me below ❤️</p>
             </div>
 
             <form action="https://formsubmit.co/pritishmehta18@gmail.com" method="POST">
                 <input type="text" name="_honey" style="display:none">
                 <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_subject" value="New Message from Chutkii! ❤️">
-                <input type="hidden" name="_next"> <div class="form-group">
+                <input type="hidden" name="_subject" value="A special message from Chutkii! ❤️">
+                
+                <input type="hidden" name="Sender" value="Chutkii">
 
                 <div class="form-group">
-                    <textarea id="message" name="message" class="form-control font-romantic text-2xl min-h-[150px]" placeholder=" " required></textarea>
-                    <label for="message">Your Message to me...</label>
+                    <textarea id="message" name="message" class="form-control font-romantic text-2xl min-h-[200px]" placeholder=" " required></textarea>
+                    <label for="message">Your Message...</label>
                 </div>
 
-                <button type="submit" class="w-full bg-[#9f1239] text-white font-bold py-4 rounded-2xl shadow-xl hover:bg-rose-800 transition-all">
+                <button type="submit" class="w-full bg-[#9f1239] text-white font-bold py-4 rounded-2xl shadow-xl hover:bg-rose-800 transition-all text-lg">
                     Send My Answer ❤️
                 </button>
             </form>
@@ -110,7 +110,6 @@
     </main>
 
     <script>
-        // QUIZ DATA
         const quizQuestions = [
             {
                 question: "When did we love spending time together the most?",
@@ -223,5 +222,3 @@
     </script>
 </body>
 </html>
-
-
