@@ -3,148 +3,1161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Verification - Chutkii</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>A Special Moment - Chutkii</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes:wght@400&family=Playfair+Display:wght@700&family=Syne:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href='https://fonts.googleapis.com' rel='stylesheet'>
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f3f4f6; transition: background 1.5s; overflow-x: hidden; }
-        .theme-romantic { background: #fffafa !important; }
-        .font-romantic { font-family: 'Dancing Script', cursive; }
-        .font-classic-romantic { font-family: 'Great Vibes', cursive; }
-        .hidden { display: none !important; }
-        
-        .floating-heart {
-            position: fixed; bottom: -50px; pointer-events: none; z-index: 0;
-            animation: float linear infinite;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* Progress Bar Animation */
-        #progress-inner { transition: width 0.4s ease; }
+        :root {
+            --primary: #ec4899;
+            --primary-dark: #be123c;
+            --primary-light: #fbcfe8;
+            --primary-lighter: #fdf2f8;
+            --accent: #f43f5e;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --success: #10b981;
+            --error: #ef4444;
+            --border-radius: 1.25rem;
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Birthstone',cursive;
+            background: linear-gradient(135deg, #fce7f3 0%, #fce4ec 50%, #f3e5f5 100%);
+            transition: background 1.5s ease;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+        }
+
+        body.theme-romantic {
+            background: linear-gradient(135deg, #ffe0ec 0%, #fce7f3 50%, #f3e5f5 100%) !important;
+        }
+
+        main {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* FLOATING ELEMENTS */
+        #hearts-container,
+        #sparkles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: fixed;
+            bottom: -50px;
+            pointer-events: none;
+            z-index: 1;
+            animation: float linear infinite;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg) scale(0.7);
+                opacity: 0;
+            }
+            10% { opacity: 0.85; }
+            100% {
+                transform: translateY(-110vh) rotate(360deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: sparkle-animation 2s ease-out forwards;
+        }
+
+        @keyframes sparkle-animation {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* CARD ANIMATIONS */
+        .card-enter {
+            animation: cardSlideIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes cardSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.93);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .text-fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pulse-text {
+            animation: pulse-text 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-text {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* UTILITY CLASSES */
+        .hidden { display: none !important; }
+
+        /* STEP WELCOME */
+        #step-welcome {
+            max-width: 38rem;
+            width: 100%;
+            background: linear-gradient(135deg, white 0%, var(--primary-lighter) 100%);
+            border: 2px solid var(--primary-light);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        #step-welcome > div:first-child {
+            background: linear-gradient(135deg, #7f1d1d 0%, var(--primary-dark) 100%);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .window-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .dot:hover {
+            transform: scale(1.3);
+        }
+
+        .dot-red { background-color: #fca5a5; }
+        .dot-yellow { background-color: #fcd34d; }
+        .dot-green { background-color: #86efac; }
+
+        .window-title {
+            color: #fce7f3;
+            font-size: 0.7rem;
+            margin-left: auto;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+        }
+
+        #step-welcome .content {
+            padding: 3.5rem 2.5rem;
+        }
+
+        #step-welcome h1 {
+            font-size: 2.75rem;
+            font-weight: 900;
+            color: var(--primary-dark);
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.025em;
+            line-height: 1.1;
+        }
+
+        #step-welcome .subtitle {
+            color: var(--primary);
+            font-size: 1.05rem;
+            margin-bottom: 2.25rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        #step-welcome p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .welcome-photo-section {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .welcome-photo-container {
+            position: relative;
+            width: 100%;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 4px solid var(--primary);
+            background: white;
+            aspect-ratio: auto;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .welcome-photo-container:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 30px 60px rgba(236, 72, 153, 0.25);
+        }
+
+        .welcome-photo-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* BUTTONS */
+        button {
+            font-family: inherit;
+            border: none;
+            border-radius: 0.75rem;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, #dc2626 0%, var(--accent) 100%);
+            color: white;
+            padding: 1.125rem 1.5rem;
+            font-size: 1rem;
+            box-shadow: var(--shadow-md);
+            letter-spacing: 0.01em;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 15px 35px rgba(220, 38, 38, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--accent) 100%);
+            color: white;
+            padding: 1.25rem 1.5rem;
+            font-size: 0.95rem;
+            box-shadow: var(--shadow-md);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 15px 35px rgba(190, 18, 60, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .btn-large {
+            background: linear-gradient(135deg, #e11d48 0%, var(--accent) 100%);
+            color: white;
+            font-size: 1.875rem;
+            font-weight: 900;
+            padding: 1.75rem 4.5rem;
+            border-radius: 999px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            letter-spacing: 0.01em;
+        }
+
+        .btn-large:hover {
+            box-shadow: 0 25px 60px rgba(225, 29, 72, 0.35);
+            transform: scale(1.08);
+        }
+
+        .btn-pulse {
+            animation: pulse-glow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.5), var(--shadow-md);
+            }
+            50% {
+                box-shadow: 0 0 0 20px rgba(225, 29, 72, 0), var(--shadow-md);
+            }
+        }
+
+        .btn-disabled {
+            background-color: #e5e7eb;
+            color: #9ca3af;
+            font-weight: 700;
+            padding: 1rem 2.5rem;
+            border-radius: 999px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            cursor: not-allowed;
+            transition: all 0.25s ease-out;
+        }
+
+        #no-button:hover {
+            animation: wiggle 0.35s ease-in-out;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-6deg); }
+            75% { transform: rotate(6deg); }
+        }
+
+        /* STEP RECORDING */
+        #step-recording {
+            max-width: 38rem;
+            width: 100%;
+            background: linear-gradient(135deg, white 0%, var(--primary-lighter) 100%);
+            border: 2px solid var(--primary-light);
+            padding: 3.5rem 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+
+        #step-recording .emoji-large {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            animation: bounce 2.2s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-28px); }
+        }
+
+        #step-recording h2 {
+            font-size: 2.25rem;
+            font-weight: 900;
+            margin-bottom: 1.25rem;
+            color: var(--primary-dark);
+            letter-spacing: -0.02em;
+        }
+
+        #step-recording p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 2.25rem;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fef2f2 0%, #fff5f7 100%);
+            border: 2px solid var(--primary-light);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .info-box p {
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* STEP FILLER */
+        #step-filler {
+            max-width: 38rem;
+            width: 100%;
+            background-color: #0f172a;
+            color: #4ade80;
+            padding: 2.75rem;
+            border-radius: var(--border-radius);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-lg), inset 0 1px 3px rgba(255, 255, 255, 0.1);
+            border: 2px solid #16a34a;
+        }
+
+        #step-filler .terminal-line {
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            opacity: 0.8;
+            color: #4ade80;
+            letter-spacing: 0.02em;
+        }
+
+        #filler-status {
+            color: #4ade80;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            animation: pulse-text 2s ease-in-out infinite;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #1f2937;
+            height: 1.75rem;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+            border: 1.5px solid #16a34a;
+        }
+
+        #progress-inner {
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(90deg, var(--primary), var(--primary-light), #f472b6);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.7);
+            border-radius: 999px;
+            height: 100%;
+        }
+
+        #progress-percent {
+            text-align: right;
+            font-size: 0.8rem;
+            color: #4ade80;
+            font-weight: 700;
+        }
+
+        #step-filler .loading-text {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        /* STEP QUIZ */
+        #step-quiz {
+            max-width: 58rem;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(253, 242, 248, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            padding: 3rem 2.75rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--primary-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .quiz-header {
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-counter {
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.75rem;
+        }
+
+        .quiz-progress-bar {
+            width: 100%;
+            max-width: 60px;
+            height: 0.375rem;
+            background: linear-gradient(to right, var(--primary-light), var(--primary));
+            border-radius: 999px;
+            transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        #quiz-question {
+            font-size: 1rem;
+            color: var(--primary-dark);
+            line-height: 1.35;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            text-align: center;
+        }
+
+        .quiz-photo-section {
+            width: 100%;
+            max-width: 250px;
+            margin: 0.75rem auto 1.25rem;
+        }
+
+        .quiz-photo-container {
+            position: relative;
+            width: 100%;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 4px solid var(--primary);
+            background: white;
+            transition: transform 0.3s ease;
+        }
+
+        .quiz-photo-container:hover {
+            transform: scale(1.02);
+        }
+
+        .quiz-photo-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .quiz-photo-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.75rem;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        #quiz-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.875rem;
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+
+        .quiz-option {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 0.875rem;
+            border: 2.5px solid #e5e7eb;
+            background-color: white;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            line-height: 1.5;
+        }
+
+        .quiz-option:hover {
+            transform: translateX(6px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 24px rgba(236, 72, 153, 0.12);
+            background-color: var(--primary-lighter);
+        }
+
+        .quiz-option-selected {
+            transform: scale(0.98);
+        }
+
+        #quiz-feedback {
+            width: 100%;
+            padding: 1.2rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            font-style: italic;
+            font-size: 0.9rem;
+            border: 2.5px solid;
+            animation: feedbackBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            line-height: 1.6;
+        }
+
+        @keyframes feedbackBounce {
+            0% { transform: scale(0.3); opacity: 0; }
+            70% { transform: scale(1.08); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        #next-quiz-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--accent) 100%);
+            color: white;
+            font-weight: 700;
+            padding: 1rem;
+            border-radius: 0.875rem;
+            box-shadow: var(--shadow-md);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        #next-quiz-btn:hover {
+            box-shadow: 0 15px 35px rgba(190, 18, 60, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* STEP PROPOSAL */
+        #step-proposal {
+            max-width: 58rem;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(253, 242, 248, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            padding: 3.5rem 2.75rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--primary-light);
+        }
+
+        #step-proposal .emoji-giant {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: float-gentle 3.2s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes float-gentle {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        #step-proposal h3:first-of-type {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            line-height: 1.25;
+            margin-bottom: 2rem;
+            font-weight: 900;
+            letter-spacing: -0.015em;
+        }
+
+        .proposal-photo-gallery {
+            width: 100%;
+            margin: 2.25rem 0;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1.125rem;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 3px solid var(--primary);
+            background: white;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            aspect-ratio: 1;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.06) rotate(1deg);
+            box-shadow: 0 15px 40px rgba(236, 72, 153, 0.2);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .quote-box {
+            border-left: 6px solid var(--primary);
+            background: linear-gradient(135deg, rgba(252, 231, 243, 0.8) 0%, rgba(243, 229, 245, 0.6) 100%);
+            padding: 2.25rem;
+            border-radius: 1rem;
+            position: relative;
+            margin: 2.75rem 0;
+            font-family: 'Great Vibes';
+        }
+
+        .quote-box::before {
+            content: '"';
+            font-size: 4.5rem;
+            color: var(--primary);
+            position: absolute;
+            top: -25px;
+            left: 8px;
+            opacity: 0.15;
+        }
+
+        .quote-box p {
+            font-size: 1.25rem;
+            color: var(--primary-dark);
+            line-height: 1.8;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        #step-proposal h3:last-of-type {
+            font-size: 2.125rem;
+            color: var(--primary-dark);
+            line-height: 1.3;
+            margin-bottom: 2.5rem;
+            margin-top: 2.25rem;
+            font-weight: 900;
+            letter-spacing: -0.01em;
+        }
+
+        .proposal-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3.25rem;
+        }
+
+        @media (min-width: 640px) {
+            .proposal-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        .proposal-note {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 2rem;
+            font-weight: 500;
+        }
+
+        /* STEP SUCCESS */
+        #step-success {
+            max-width: 58rem;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(253, 242, 248, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            padding: 3.5rem 2.75rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--primary-light);
+        }
+
+        #step-success .success-emoji {
+            font-size: 4.5rem;
+            margin-bottom: 1.25rem;
+            animation: bounce 2.2s ease-in-out infinite;
+        }
+
+        #step-success h2 {
+            font-size: 2.75rem;
+            color: var(--primary-dark);
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        #step-success .success-text {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 2.75rem;
+            font-size: 1.15rem;
+            letter-spacing: 0.01em;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 1.5rem;
+            border: 2.5px solid #e5e7eb;
+            border-radius: 1rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.125rem;
+            min-height: 160px;
+            outline: none;
+            background-color: white;
+            resize: vertical;
+            transition: all 0.3s ease;
+            line-height: 1.6;
+        }
+
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.12);
+            background-color: #fff;
+        }
+
+        textarea::placeholder {
+            color: #d1d5db;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #dc2626 0%, var(--accent) 100%);
+            color: white;
+            font-weight: 700;
+            padding: 1.25rem 1.5rem;
+            border-radius: 1rem;
+            font-size: 1rem;
+            box-shadow: var(--shadow-md);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.25s ease;
+        }
+
+        .submit-btn:hover {
+            box-shadow: 0 15px 35px rgba(220, 38, 38, 0.25);
+            transform: translateY(-3px);
+        }
+
+        #step-success .final-text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 2rem;
+            font-weight: 500;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            #step-welcome h1,
+            #step-proposal h3:first-of-type,
+            #step-success h2 {
+                font-size: 2.125rem;
+            }
+
+            #step-proposal h3:last-of-type {
+                font-size: 1.75rem;
+            }
+
+            #quiz-question {
+                font-size: 1.625rem;
+            }
+
+            #step-proposal .emoji-giant {
+                font-size: 4rem;
+            }
+
+            .quote-box p {
+                font-size: 1.125rem;
+            }
+
+            #step-welcome,
+            #step-recording,
+            #step-filler {
+                padding: 2rem;
+            }
+
+            #step-quiz,
+            #step-proposal,
+            #step-success {
+                padding: 2rem 1.75rem;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+                gap: 1rem;
+            }
+
+            .photo-item {
+                aspect-ratio: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #step-welcome h1,
+            #step-proposal h3:first-of-type,
+            #step-success h2 {
+                font-size: 1.875rem;
+            }
+
+            #quiz-question {
+                font-size: 1.375rem;
+            }
+
+            #step-proposal h3:last-of-type {
+                font-size: 1.5rem;
+            }
+
+            .proposal-buttons {
+                gap: 1rem;
+            }
+
+            .btn-large {
+                font-size: 1.5rem;
+                padding: 1.25rem 3rem;
+            }
+
+            .quote-box p {
+                font-size: 1rem;
+            }
+
+            #step-welcome .content,
+            #step-recording,
+            #step-filler,
+            #step-quiz,
+            #step-proposal,
+            #step-success {
+                padding: 1.5rem 1.25rem;
+            }
+
+            #step-welcome h1 {
+                margin-bottom: 0.5rem;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+        }
     </style>
 </head>
 <body id="app-body">
     <div id="hearts-container"></div>
+    <div id="sparkles-container"></div>
 
-    <main class="min-h-screen w-full flex flex-col items-center justify-center p-4 relative z-10">
-        
-        <div id="step-welcome" class="w-full max-w-md bg-white border border-gray-300 rounded-sm shadow-sm overflow-hidden">
-            <div class="bg-gray-800 px-4 py-2 flex items-center">
-                <div class="flex space-x-1.5"><div class="w-2.5 h-2.5 bg-red-400 rounded-full"></div><div class="w-2.5 h-2.5 bg-yellow-400 rounded-full"></div><div class="w-2.5 h-2.5 bg-green-400 rounded-full"></div></div>
-                <span class="text-gray-400 text-[10px] ml-4 font-mono">auth_gateway.sh</span>
+    <main>
+        <!-- WELCOME STEP -->
+        <div id="step-welcome" class="card-enter">
+            <div>
+                <div class="window-dots">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                </div>
+                <span class="window-title">heart_protocol.exe</span>
             </div>
-            <div class="p-8 text-center">
-                <h1 class="text-sm font-bold text-gray-800 mb-1 tracking-widest uppercase">Identity Verification</h1>
-                <p class="text-gray-500 text-[11px] mb-8 font-medium">Recipient: <span class="text-blue-600 font-bold underline">CHUTKII</span></p>
-                <button onclick="goToStep('step-recording')" class="w-full bg-blue-600 text-white py-3 rounded text-sm font-bold hover:bg-blue-700">Confirm & Proceed</button>
+            <div class="content">
+                <h1 font = 'Great Vibes'>✨ A Special Moment</h1>
+                <p class="subtitle">For my dearest Chutkii</p>
+                
+                <div class="welcome-photo-section">
+                    <div class="welcome-photo-container">
+                        <img src="IMG-20251119-WA0604.jpg" alt="You two">
+                    </div>
+                </div>
+
+                <p>This is a little something I've prepared just for you. Are you ready?</p>
+                <button onclick="goToStep('step-recording')" class="btn-primary">
+                    Let's Begin ❤️
+                </button>
             </div>
         </div>
 
-        <div id="step-recording" class="hidden w-full max-w-md bg-white border border-gray-300 p-8 rounded-lg shadow-xl text-center">
-            <h2 class="text-lg font-bold mb-4 border-b pb-3">Decryption Prerequisite</h2>
-            <p class="text-gray-600 mb-6 text-sm">Start your phone recording now to capture the next few moments.</p>
-            <button onclick="startFunFiller()" class="w-full bg-gray-900 text-white font-bold py-4 rounded uppercase tracking-widest text-sm">DECRYPT CONTENT</button>
-        </div>
-
-        <div id="step-filler" class="hidden w-full max-w-md bg-black text-green-400 p-6 rounded-lg font-mono text-sm shadow-2xl border border-green-900">
-            <div class="mb-4 text-xs opacity-70">>> Initializing Love_Hack_v11.0.exe</div>
-            <div id="filler-status" class="mb-4 h-6">Bypassing heart security...</div>
-            <div class="w-full bg-gray-800 h-4 rounded-full overflow-hidden mb-2">
-                <div id="progress-inner" class="bg-green-500 h-full w-0"></div>
-            </div>
-            <div class="text-right text-[10px]" id="progress-percent">0%</div>
-        </div>
-
-        <div id="step-quiz" class="hidden w-full max-w-2xl bg-white/90 p-8 rounded-[2rem] shadow-2xl border-2 border-rose-200 text-center space-y-6">
-            <h2 id="quiz-question" class="text-2xl font-romantic text-rose-950 font-bold"></h2>
-            <div id="quiz-options" class="grid grid-cols-1 gap-3"></div>
-            <div id="quiz-feedback" class="hidden p-4 rounded-xl font-medium italic"></div>
-            <button id="next-quiz-btn" onclick="handleNextQuiz()" class="hidden w-full bg-[#9f1239] text-white font-bold py-3 rounded-xl shadow-lg">Continue Memory Recap</button>
-        </div>
-
-        <div id="step-proposal" class="hidden w-full max-w-3xl bg-white/90 p-8 rounded-[2.5rem] shadow-2xl border-2 border-rose-200 text-center space-y-6">
-            <h3 class="text-3xl font-romantic text-rose-950 italic font-bold">For my dearest Chutkii,</h3>
-            <p class="text-2xl font-romantic text-rose-950 font-bold italic leading-relaxed">
-                "Eleven years of laughter, and a lifetime more to go,<br>
-                With you by my side, is the only way I want to grow."
+        <!-- RECORDING STEP -->
+        <div id="step-recording" class="hidden card-enter">
+            <div class="emoji-large">📱</div>
+            <h2>Make it Special</h2>
+            <p>
+                This moment deserves to be remembered. Start your phone recording now, so you can relive this again and again. 💕
             </p>
-            <h3 class="text-3xl font-romantic text-rose-950 italic font-bold">Will you be my Valentine? </h3>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-6 mt-8">
-                <button onclick="goToStep('step-success')" class="bg-[#9f1239] text-white text-3xl font-black py-5 px-20 rounded-full shadow-lg hover:scale-110 transition-all border-4 border-rose-900">YES! ❤️</button>
-                <button onmouseover="moveNo(this)" id="no-button" class="bg-gray-200 text-gray-500 font-bold py-3 px-8 rounded-full transition-all">No</button>
+            <div class="info-box">
+                <p>💡 Pro tip: Make sure your phone is in landscape mode for the best experience!</p>
             </div>
+            <button onclick="startFunFiller()" class="btn-secondary">
+                Ready! Decrypt 💘
+            </button>
         </div>
 
-        <div id="step-success" class="hidden w-full max-w-md bg-white/95 p-8 rounded-[2rem] shadow-2xl border-2 border-rose-200">
-            <div class="text-center mb-6">
-                <h2 class="text-3xl font-romantic text-rose-950 font-black">I'm so lucky!</h2>
-                <p class="text-rose-800 font-medium">Leave a message for me below ❤️</p>
+        <!-- FILLER/LOADING STEP -->
+        <div id="step-filler" class="hidden card-enter">
+            <div class="terminal-line">>> Initializing LOVE_PROTOCOL_v2.0.exe</div>
+            <div id="filler-status">Bypassing heart security...</div>
+            <div class="progress-bar">
+                <div id="progress-inner"></div>
             </div>
+            <div id="progress-percent">0%</div>
+            <div class="loading-text pulse-text">Loading memories... ❤️</div>
+        </div>
+
+        <!-- QUIZ STEP -->
+        <div id="step-quiz" class="hidden card-enter">
+            <div class="quiz-header">
+                <p class="quiz-counter">Question <span id="quiz-counter">1</span> of 5</p>
+                <div class="quiz-progress-bar" id="quiz-progress"></div>
+            </div>
+            <h2 id="quiz-question"></h2>
+            
+            <div class="quiz-photo-section">
+                <div class="quiz-photo-container">
+                    <img src="IMG-20251119-WA0417.jpg" alt="Memory" id="quiz-photo">
+                </div>
+                <p class="quiz-photo-label" id="quiz-photo-label">A moment we'll never forget</p>
+            </div>
+
+            <div id="quiz-options"></div>
+            <div id="quiz-feedback" class="hidden"></div>
+            <button id="next-quiz-btn" class="hidden" onclick="handleNextQuiz()">
+                ✨ Next Memory ✨
+            </button>
+        </div>
+
+        <!-- PROPOSAL STEP -->
+        <div id="step-proposal" class="hidden card-enter">
+            <div class="emoji-giant">💕</div>
+            <h3>For my dearest Chutkii,</h3>
+
+            <div class="proposal-photo-gallery">
+                <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1.25rem; font-weight: 500; letter-spacing: 0.01em;">Our favorite memories:</p>
+                <div class="photo-grid" id="photo-grid"></div>
+            </div>
+
+            <div class="quote-box">
+                <p>
+                    "Eleven years of laughter, and a lifetime more to go,<br>
+                    With you by my side, is the only way I want to grow."
+                </p>
+            </div>
+
+            <h3>Will you be my <span style="color: var(--primary);">Valentine</span>?</h3>
+
+            <div class="proposal-buttons">
+                <button onclick="handleYes()" class="btn-large btn-pulse">
+                    YES! ❤️
+                </button>
+                <button onmouseover="moveNo(this)" onmousemove="moveNo(this)" id="no-button" class="btn-disabled">
+                    No
+                </button>
+            </div>
+
+            <p class="proposal-note">(The No button is feeling shy 👉👈)</p>
+        </div>
+
+        <!-- SUCCESS STEP -->
+        <div id="step-success" class="hidden card-enter">
+            <div class="success-emoji">✨💕✨</div>
+            <h2>I'm so lucky!</h2>
+            <p class="success-text">Leave a message for me below ❤️</p>
+
             <form action="https://formsubmit.co/pritishmehta18@gmail.com" method="POST">
                 <input type="text" name="_honey" style="display:none">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_subject" value="A special message from Chutkii! ❤️">
                 <input type="hidden" name="Sender" value="Chutkii">
-                <textarea name="message" class="w-full p-4 border-2 border-rose-200 rounded-xl font-romantic text-2xl min-h-[150px] outline-none focus:border-rose-500 mb-4" placeholder="Your Message..." required></textarea>
-                <button type="submit" class="w-full bg-[#9f1239] text-white font-bold py-4 rounded-2xl shadow-xl hover:bg-rose-800 transition-all">
+
+                <div class="form-group">
+                    <textarea
+                        name="message"
+                        placeholder="Your Message..."
+                        required>
+                    </textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
                     Send My Answer ❤️
                 </button>
             </form>
-        </div>
 
+            <p class="final-text">Can't wait to read your message! 💌</p>
+        </div>
     </main>
 
     <script>
         const quizQuestions = [
             {
                 question: "When did we love spending time together the most?",
+                photoUrl: "IMG-20251119-WA0417.jpg",
+                photoLabel: "When was this? 📸",
                 options: [
-                    { text: "During 11th–12th", feedback: "Not wrong at all… but there is a slightly better answer.", correct: false },
-                    { text: "During college", feedback: "Very strong option, but not the top one.", correct: false },
-                    { text: "Whenever I came back from Ireland", feedback: "Tempting choice… still not the winner.", correct: false },
-                    { text: "We always love spending time as long as it’s with each other", feedback: "Okay yes, that’s the correct one.", correct: true }
+                    { text: "During 11th–12th", feedback: "Not wrong at all… but there is a slightly better answer. 😊", correct: false },
+                    { text: "During college", feedback: "Very strong option, but not the top one. 📚", correct: false },
+                    { text: "Whenever I came back from Ireland", feedback: "Tempting choice… still not the winner. ✈️", correct: false },
+                    { text: "We always love spending time as long as it's with each other", feedback: "Okay yes, that's the correct one. 💫", correct: true }
                 ]
             },
             {
-                question: "What do we enjoy the most when we’re together?",
+                question: "What do we enjoy the most when we're together?",
+                photoUrl: "IMG_20160523_185625.jpg",
+                photoLabel: "Doing what we love most 💕",
                 options: [
-                    { text: "Talking endlessly", feedback: "Good answer… but there’s a better one hiding.", correct: false },
-                    { text: "Laughing at random things", feedback: "Close, but not quite.", correct: false },
-                    { text: "Doing nothing and still having fun", feedback: "Almost, but not my favourite option.", correct: false },
-                    { text: "Just being together, no matter what we’re doing", feedback: "There it is. That’s the one.", correct: true }
+                    { text: "Talking endlessly", feedback: "Good answer… but there's a better one hiding. 🗣️", correct: false },
+                    { text: "Laughing at random things", feedback: "Close, but not quite. 😄", correct: false },
+                    { text: "Doing nothing and still having fun", feedback: "Almost, but not my favourite option. 🎯", correct: false },
+                    { text: "Just being together, no matter what we're doing", feedback: "There it is. That's the one. 🎪", correct: true }
                 ]
             },
             {
                 question: "What made our trip the best?",
+                photoUrl: "IMG_20251002_182158008.jpg",
+                photoLabel: "Our favorite trip ✈️",
                 options: [
-                    { text: "The place", feedback: "Nice choice, but that wasn’t the real reason.", correct: false },
-                    { text: "The food", feedback: "Fair… but not the answer I had in mind.", correct: false },
-                    { text: "The unplanned moments", feedback: "Very close, but still second place.", correct: false },
-                    { text: "The fact that we were together", feedback: "Exactly. Winner.", correct: true }
+                    { text: "The place", feedback: "Nice choice, but that wasn't the real reason. 🏖️", correct: false },
+                    { text: "The food", feedback: "Fair… but not the answer I had in mind. 🍽️", correct: false },
+                    { text: "The unplanned moments", feedback: "Very close, but still second place. 🎲", correct: false },
+                    { text: "The fact that we were together", feedback: "Exactly. Winner. 🏆", correct: true }
                 ]
             },
             {
                 question: "After 11 years, what are we really good at?",
+                photoUrl: "IMG_20160523_185625.jpg",
+                photoLabel: "11 years and counting 🎂",
                 options: [
-                    { text: "Understanding each other", feedback: "True, but not the best one.", correct: false },
-                    { text: "Being comfortable together", feedback: "Ding Ding Ding.... right answer", correct: true },
-                    { text: "Annoying each other lovingly", feedback: "Valid… but not my top pick.", correct: false },
-                    { text: "Choosing each other, every time", feedback: "Sorry but toooo Cheesy", correct: false }
+                    { text: "Understanding each other", feedback: "True, but not the best one. 🤔", correct: false },
+                    { text: "Being comfortable together", feedback: "Ding Ding Ding.... right answer 🎉", correct: true },
+                    { text: "Annoying each other lovingly", feedback: "Valid… but not my top pick. 😜", correct: false },
+                    { text: "Choosing each other, every time", feedback: "Sorry but too cheesy 🧀😅", correct: false }
                 ]
             },
             {
                 question: "Which name from the below is the best?",
+                photoUrl: "IMG_20260115_210242225.jpg",
+                photoLabel: "What should I call you? 😘",
                 options: [
-                    { text: "Babu", feedback: "Amazing way to call you that but not the right answer", correct: false },
-                    { text: "Shona", feedback: "Very strong option, but not the top one.", correct: false },
-                    { text: "Baby", feedback: "Tempting choice… still not the winner.", correct: false },
-                    { text: "Darling/ Jaanemon", feedback: "Okay yes, that’s the correct one.", correct: true },
-                    { text: "We need to find new name", feedback: "That's too much stress", correct: false },
-                    { text: "All of them will work", feedback: "Finally the pressure of finding a new name is gone", correct: true }
+                    { text: "Babu", feedback: "Amazing way to call you that but not the right answer 🐣", correct: false },
+                    { text: "Shona", feedback: "Very strong option, but not the top one. ✨", correct: false },
+                    { text: "Baby", feedback: "Tempting choice… still not the winner. 👶", correct: false },
+                    { text: "Darling / Jaanemon", feedback: "Okay yes, that's the correct one. 👑", correct: true },
+                    { text: "We need to find a new name", feedback: "That's too much stress 😤", correct: false },
+                    { text: "All of them will work", feedback: "Finally the pressure is gone! 🎊", correct: true }
                 ]
             }
         ];
@@ -152,26 +1165,28 @@
         let currentQuizIndex = 0;
 
         function goToStep(stepId) {
-            document.querySelectorAll('main > div').forEach(div => div.classList.add('hidden'));
+            const steps = document.querySelectorAll('main > div');
+            steps.forEach(step => step.classList.add('hidden'));
             document.getElementById(stepId).classList.remove('hidden');
             if (stepId === 'step-quiz') loadQuiz();
+            if (stepId === 'step-proposal') loadPhotoGallery();
         }
 
-        // FUN FILLER LOGIC
         function startFunFiller() {
             document.getElementById('app-body').classList.add('theme-romantic');
             goToStep('step-filler');
-            setInterval(createHeart, 400);
+            setInterval(createHeart, 500);
 
             const statuses = [
                 "Bypassing heart security...",
                 "Downloading 11 years of memories...",
                 "Analyzing cuteness levels (Error: Too High)...",
                 "Decrypting romantic messages...",
-                "Optimizing for forever...",
-                "Almost there, Chutkii..."
+                "Optimizing you for forever...",
+                "Almost there, Chutkii...",
+                "Preparing your surprise... 💕"
             ];
-            
+
             let progress = 0;
             const bar = document.getElementById('progress-inner');
             const statusText = document.getElementById('filler-status');
@@ -182,12 +1197,13 @@
                 if (progress >= 100) {
                     progress = 100;
                     clearInterval(interval);
-                    setTimeout(() => goToStep('step-quiz'), 800);
+                    statusText.innerText = "Successfully unlocked! Revealing your moment...";
+                    setTimeout(() => goToStep('step-quiz'), 1000);
                 }
                 bar.style.width = progress + "%";
                 percentText.innerText = progress + "%";
-                statusText.innerText = statuses[Math.floor(progress / 20)] || statuses[statuses.length-1];
-            }, 500);
+                statusText.innerText = statuses[Math.floor(progress / 15)] || statuses[statuses.length - 1];
+            }, 400);
         }
 
         function createHeart() {
@@ -196,46 +1212,136 @@
             heart.className = 'floating-heart';
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            heart.style.fontSize = (Math.random() * 25 + 18) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
             container.appendChild(heart);
-            setTimeout(() => heart.remove(), 7000);
+            setTimeout(() => heart.remove(), 8000);
+        }
+
+        function createSparkle(x, y) {
+            const container = document.getElementById('sparkles-container');
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.innerHTML = '✨';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.fontSize = '22px';
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 160;
+            sparkle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+            sparkle.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+            container.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 2000);
+        }
+
+        function createConfetti() {
+            const container = document.body;
+            for (let i = 0; i < 60; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.innerHTML = '❤️';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                confetti.style.fontSize = (Math.random() * 22 + 14) + 'px';
+                confetti.style.opacity = Math.random() * 0.8 + 0.2;
+                const duration = Math.random() * 3.5 + 2.5;
+                confetti.style.animation = `confetti-fall ${duration}s linear forwards`;
+                container.appendChild(confetti);
+                setTimeout(() => confetti.remove(), duration * 1000);
+            }
         }
 
         function loadQuiz() {
             const quiz = quizQuestions[currentQuizIndex];
             document.getElementById('quiz-question').innerText = quiz.question;
+            document.getElementById('quiz-counter').innerText = currentQuizIndex + 1;
+            document.getElementById('quiz-photo').src = quiz.photoUrl;
+            document.getElementById('quiz-photo-label').innerText = quiz.photoLabel;
+
+            const progressWidth = ((currentQuizIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress').style.width = progressWidth + '%';
+
             const optionsContainer = document.getElementById('quiz-options');
             optionsContainer.innerHTML = '';
-            quiz.options.forEach(opt => {
+
+            quiz.options.forEach((opt) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full p-4 rounded-xl border-2 border-rose-100 bg-white/60 text-left hover:border-rose-400 font-medium";
+                btn.className = 'quiz-option';
                 btn.innerText = opt.text;
                 btn.onclick = () => {
+                    btn.classList.add('quiz-option-selected');
                     const feedback = document.getElementById('quiz-feedback');
                     feedback.innerText = opt.feedback;
                     feedback.classList.remove('hidden');
-                    feedback.style.backgroundColor = opt.correct ? "#dcfce7" : "#ffe4e6";
-                    if(opt.correct) document.getElementById('next-quiz-btn').classList.remove('hidden');
+                    feedback.classList.add('feedback-pop');
+                    feedback.style.borderColor = opt.correct ? '#10b981' : '#ef4444';
+                    feedback.style.backgroundColor = opt.correct ? "#f0fdf4" : "#fef2f2";
+                    feedback.style.color = opt.correct ? '#065f46' : '#7f1d1d';
+
+                    if (opt.correct) {
+                        document.getElementById('next-quiz-btn').classList.remove('hidden');
+                        createSparkle(window.innerWidth / 2, 200);
+                    }
                 };
                 optionsContainer.appendChild(btn);
             });
+
             document.getElementById('next-quiz-btn').classList.add('hidden');
             document.getElementById('quiz-feedback').classList.add('hidden');
         }
 
+        function loadPhotoGallery() {
+            const photoUrls = [
+                "IMG-20251119-WA0604.jpg",
+                "IMG-20251119-WA0417.jpg",
+                "IMG_20160523_185625.jpg",
+                "IMG_20251002_182158008.jpg",
+                "IMG_20260115_210242225.jpg"
+            ];
+
+            const grid = document.getElementById('photo-grid');
+            grid.innerHTML = '';
+            photoUrls.forEach(url => {
+                const item = document.createElement('div');
+                item.className = 'photo-item';
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = 'Memory';
+                item.appendChild(img);
+                grid.appendChild(item);
+            });
+        }
+
         function handleNextQuiz() {
             currentQuizIndex++;
-            if (currentQuizIndex < quizQuestions.length) loadQuiz();
-            else goToStep('step-proposal');
+            if (currentQuizIndex < quizQuestions.length) {
+                loadQuiz();
+            } else {
+                goToStep('step-proposal');
+            }
+        }
+
+        function handleYes() {
+            createConfetti();
+            setTimeout(() => {
+                goToStep('step-success');
+            }, 500);
         }
 
         function moveNo(btn) {
+            const maxX = window.innerWidth - btn.offsetWidth - 20;
+            const maxY = window.innerHeight - btn.offsetHeight - 20;
+            const x = Math.max(0, Math.random() * maxX);
+            const y = Math.max(0, Math.random() * maxY);
+
             btn.style.position = 'fixed';
-            btn.style.left = Math.random() * 80 + 'vw';
-            btn.style.top = Math.random() * 80 + 'vh';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+
+            if (Math.random() > 0.65) {
+                btn.style.transform = `rotate(${Math.random() * 12 - 6}deg)`;
+            }
         }
     </script>
 </body>
-</html>
-
+</html> 
